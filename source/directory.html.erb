@@ -1,0 +1,53 @@
+---
+title: Welcome to Middleman
+---
+
+<% articles.each do |article| %>
+
+  <!-- Post -->
+  <article class="post">
+    <header>
+      <div class="title">
+        <h2><a href="#"><%= article['title'] %></a></h2>
+        <p>Lorem ipsum dolor amet nullam consequat etiam feugiat</p>
+      </div>
+      <div class="meta">
+        <time class="published" datetime="2015-11-01"><%= article['date'] %></time>
+        <a href="#" class="author"><span class="name">Jane Doe</span><img src="images/avatar.jpg" alt="" /></a>
+      </div>
+    </header>
+    <a href="#" class="image featured"><img src="images/pic01.jpg" alt="" /></a>
+    <%- article['content'] %>
+    <footer>
+      <ul class="actions">
+        <li><a href="#" class="button big">Continue Reading</a></li>
+      </ul>
+      <ul class="stats">
+        <li><a href="#"><%= article['tag'] %></a></li>
+        <li><a href="#" class="icon fa-heart">28</a></li>
+        <li><a href="#" class="icon fa-comment">128</a></li>
+      </ul>
+    </footer>
+  </article>
+
+<% end %>
+
+<!-- Pagination -->
+<ul class="actions pagination">
+  <li>
+    <%= link_to(
+          "Previous Page",
+          "/pages/#{page_index}",
+          {class: "button big previous"}
+        ) unless page_index === 0 %>
+  </li>
+  <li>
+    <%= link_to(
+          "Next Page",
+          "/pages/#{page_index}",
+          {class: "button big next"}
+        ) unless page_index === 0 %>
+  </li>
+  <li><a href="" class="disabled button big previous">Previous Page</a></li>
+  <li><a href="#" class="button big next">Next Page</a></li>
+</ul>
