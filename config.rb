@@ -12,7 +12,7 @@ PROJECT_PATH = "..."
 PER_PAGE = 3
 
 activate :data_source do |c|
-  c.root  = "http://localhost:9000/api/cdn/#{PROJECT_ID}/"
+  c.root  = "https://www.pushtable.com/api/firestore/#{PROJECT_ID}/"
   c.sources = [
     {
       alias: "articles",
