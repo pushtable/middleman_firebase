@@ -8,14 +8,15 @@ end
 # TODO Enter your PushTable API Key and project settings
 API_KEY = ""
 PROJECT_ID = ""
+COLLECTION_ID = "articles" # TODO Update this to where your data is stored
 PER_PAGE = 3
 
 activate :data_source do |c|
   c.root  = "https://www.pushtable.com/api/firestore/#{PROJECT_ID}/"
   c.sources = [
     {
-      alias: "articles",
-      path: "articles?auth=#{API_KEY}",
+      alias: COLLECTION_ID,
+      path: "#{COLLECTION_ID}?auth=#{API_KEY}",
       type: :json
     }
   ]
