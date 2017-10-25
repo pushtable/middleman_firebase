@@ -6,9 +6,8 @@ activate :autoprefixer do |prefix|
 end
 
 # TODO Enter your PushTable API Key and project settings
-API_KEY = "..."
-PROJECT_ID = "..."
-PROJECT_PATH = "..."
+API_KEY = ""
+PROJECT_ID = ""
 PER_PAGE = 3
 
 activate :data_source do |c|
@@ -16,7 +15,7 @@ activate :data_source do |c|
   c.sources = [
     {
       alias: "articles",
-      path: "#{PROJECT_PATH}?auth=#{API_KEY}",
+      path: "articles?auth=#{API_KEY}",
       type: :json
     }
   ]
@@ -25,34 +24,22 @@ end
 ignore 'directory.html'
 data.articles.each_slice(PER_PAGE).with_index do |articles, page_index|
 
-  puts '---ARTICLES', articles
-
-  def next_page
-    true
-  end
-
-  def prev_page
-    false
-  end
-
   proxy "index.html", "directory.html", locals: {
                                     page_index: page_index,
-                                    articles: articles.map {|article| article[1]},
-                                    next_page: next_page,
-                                    prev_page: prev_page
+                                    articles: articles.map { |article|
+                                      href = "/articles/#{to_slug(article.fields.try(:title))}.html"
+                                      {href: href}.merge(article.fields)
+                                    }
+                                    # next_page: next_page,
+                                    # prev_page: prev_page
                                   } if page_index == 0
-
-  proxy "pages/#{page_index}.html", "directory.html", locals: {
-                                    page_index: page_index,
-                                    articles: articles[1],
-                                    next_page: next_page,
-                                    prev_page: prev_page
-                                  }
 end
 
 ignore 'article.html'
-data.articles.each do |key, article|
-  proxy "articles/#{to_slug(article.title || key)}.html", "article.html", locals: { page_data: article }
+data.articles.each do |article|
+  proxy "articles/#{to_slug(article.fields.try(:title))}.html",
+        "article.html",
+        locals: { article: article.fields }
 end
 
 # Layouts

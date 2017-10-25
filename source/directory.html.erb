@@ -8,7 +8,7 @@ title: Welcome to Middleman
   <article class="post">
     <header>
       <div class="title">
-        <h2><a href="#"><%= article['title'] %></a></h2>
+        <h2><a href="<%= article[:href] %>"><%= article['title'] %></a></h2>
         <p>Lorem ipsum dolor amet nullam consequat etiam feugiat</p>
       </div>
       <div class="meta">
@@ -20,7 +20,7 @@ title: Welcome to Middleman
     <%- article['content'] %>
     <footer>
       <ul class="actions">
-        <li><a href="#" class="button big">Continue Reading</a></li>
+        <li><a href="<%= article[:href] %>" class="button big">Continue Reading</a></li>
       </ul>
       <ul class="stats">
         <li><a href="#"><%= article['tag'] %></a></li>
